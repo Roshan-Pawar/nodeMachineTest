@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-    host: 'locahost',
+    host: 'localhost',
     user: 'root',
     password: 'root',
     database: 'nimap_project'
