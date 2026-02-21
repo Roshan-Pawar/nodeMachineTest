@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.pageSize) || 10;
+    const pageSize = 10;
 
     const offset = (page - 1) * pageSize;
 
@@ -34,9 +34,18 @@ router.get('/', (req, res) => {
         LIMIT ? OFFSET ?
     `;
 
-    db.query(query, [pageSize, offset], (err, result) => {
+    db.query(query, [pageSize, offset], (err, products) => {
         if (err) return res.status(500).send(err);
-        res.json(result);
+
+        db.query('SELECT * FROM category', (err, categories) => {
+            if (err) return res.status(500).send(err);
+
+            res.render('product', {
+                products,
+                categories,
+                page
+            });
+        });
     });
 });
 
@@ -53,13 +62,13 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE
-router.delete('/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     db.query(
         'DELETE FROM product WHERE product_id=?',
         [req.params.id],
-        (err, result) => {
+        (err) => {
             if (err) return res.status(500).send(err);
-            res.send('Product Deleted');
+            res.redirect('/product');
         }
     );
 });

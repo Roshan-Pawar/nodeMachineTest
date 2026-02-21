@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Category Master</title>
+</head>
+<body>
+
+<h2>Category</h2>
+
+<form method="POST" action="/category">
+    <input type="text" name="category_name" placeholder="Category Name" required>
+    <button type="submit">Add</button>
+</form>
+
+<br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+
+    <% categories.forEach(cat => { %>
+        <tr>
+            <td><%= cat.category_id %></td>
+            <td><%= cat.category_name %></td>
+            <td>
+                <form method="POST" action="/category/delete/<%= cat.category_id %>" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+</table>
+
+<br>
+<a href="/product">Go to Product Page</a>
+
+</body>
+</html>

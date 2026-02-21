@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Master</title>
+</head>
+<body>
+
+<h2>Product Master</h2>
+
+<form method="POST" action="/product">
+    <input type="text" name="product_name" placeholder="Product Name" required>
+
+    <select name="category_id" required>
+        <option value="">Select Category</option>
+        <% categories.forEach(cat => { %>
+            <option value="<%= cat.category_id %>">
+                <%= cat.category_name %>
+            </option>
+        <% }) %>
+    </select>
+
+    <button type="submit">Add</button>
+</form>
+
+<br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category ID</th>
+        <th>Category Name</th>
+        <th>Actions</th>
+    </tr>
+
+    <% products.forEach(prod => { %>
+        <tr>
+            <td><%= prod.product_id %></td>
+            <td><%= prod.product_name %></td>
+            <td><%= prod.category_id %></td>
+            <td><%= prod.category_name %></td>
+            <td>
+                <form method="POST" action="/product/delete/<%= prod.product_id %>" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+</table>
+
+<br>
+
+<a href="/product?page=<%= page - 1 %>">Previous</a>
+<a href="/product?page=<%= page + 1 %>">Next</a>
+
+<br><br>
+<a href="/category">Go to Category Page</a>
+
+</body>
+</html>

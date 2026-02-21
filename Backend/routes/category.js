@@ -19,10 +19,10 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
     db.query('SELECT * FROM category', (err, result) => {
         if (err) return res.status(500).send(err);
-        res.json(result);
+        res.render('category', { categories: result });
     });
 });
-    
+
 // UPDATE
 router.put('/:id', (req, res) => {
     db.query(
@@ -36,13 +36,13 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE
-router.delete('/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     db.query(
         'DELETE FROM category WHERE category_id = ?',
         [req.params.id],
-        (err, result) => {
+        (err) => {
             if (err) return res.status(500).send(err);
-            res.send('Category Deleted');
+            res.redirect('/category');
         }
     );
 });
