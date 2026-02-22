@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product</title>
+</head>
+<body>
+
+<h2>Edit Product</h2>
+
+<form method="POST" action="/product/update/<%= product.product_id %>">
+
+    <input type="text"
+           name="product_name"
+           value="<%= product.product_name %>"
+           required>
+
+    <br><br>
+
+    <select name="category_id" required>
+        <% categories.forEach(cat => { %>
+            <option value="<%= cat.category_id %>"
+                <%= cat.category_id === product.category_id ? "selected" : "" %>>
+                <%= cat.category_name %>
+            </option>
+        <% }) %>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Update</button>
+</form>
+
+<br>
+<a href="/product">Back</a>
+
+</body>
+</html>
